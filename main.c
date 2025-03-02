@@ -14,17 +14,17 @@ int main() {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "0", s2);
-    insert_new_transition_table_entry(s1, "1", s3);
+    insert_new_transition_table_entry(s1, "0", 1, s2);
+    insert_new_transition_table_entry(s1, "1", 1, s3);
 
-    insert_new_transition_table_entry(s2, "0", s4);
-    insert_new_transition_table_entry(s2, "1", s3);
+    insert_new_transition_table_entry(s2, "0", 1, s4);
+    insert_new_transition_table_entry(s2, "1", 1, s3);
 
-    insert_new_transition_table_entry(s3, "0", s2);
-    insert_new_transition_table_entry(s3, "1", s4);
+    insert_new_transition_table_entry(s3, "0", 1, s2);
+    insert_new_transition_table_entry(s3, "1", 1, s4);
 
-    insert_new_transition_table_entry(s4, "0", s4);
-    insert_new_transition_table_entry(s4, "1", s4);
+    insert_new_transition_table_entry(s4, "0", 1, s4);
+    insert_new_transition_table_entry(s4, "1", 1, s4);
 
     bool result = 0;
     fsm_error_t error = execute(fsm, "1010101010", 10, &result);

@@ -49,6 +49,7 @@ void set_state_as_initial_state(fsm_t * fsm, state_t * state);
 void insert_new_transition_table_entry(
     state_t * state,
     char * state_transition_key,
+    uint8_t state_transition_key_size,
     state_t * next_state
 );
 
@@ -60,6 +61,7 @@ void insert_new_transition_table_entry(
 struct transition_table_entry
 {
     char state_transition_key[MAX_TRANSITION_INPUT];
+    uint8_t state_transition_key_size;
     // char output[MAX_TRANSITION_OUTPUT];
     state_t * next_state;
 
@@ -70,6 +72,7 @@ bool is_transition_table_entry_empty(transition_table_entry_t transition_table_e
 transition_table_entry_t * create_and_insert_new_transition_table_entry(
     transition_table_t * tt,
     char * state_transition_key,
+    uint8_t state_transition_key_size,
     state_t * next_state
 );
 

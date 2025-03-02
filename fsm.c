@@ -29,8 +29,8 @@ void set_state_as_initial_state(fsm_t * fsm, state_t * state) {
     fsm->initial_state = state;
 }
 
-void insert_new_transition_table_entry(state_t * state, char * state_transition_key, state_t * next_state) {
-    create_and_insert_new_transition_table_entry(state->transition_table, state_transition_key, next_state);
+void insert_new_transition_table_entry(state_t * state, char * state_transition_key, uint8_t state_transition_key_size, state_t * next_state) {
+    create_and_insert_new_transition_table_entry(state->transition_table, state_transition_key, state_transition_key_size, next_state);
 }
 
 bool is_same_transition_key(char * str, transition_table_entry_t * transition_table_entry) {
@@ -91,6 +91,7 @@ int get_first_empty_transition_table_entry(transition_table_t * transition_table
 transition_table_entry_t * create_and_insert_new_transition_table_entry(
     transition_table_t * tt,
     char * state_transition_key,
+    uint8_t state_transition_key_size,
     state_t * next_state
 ) {
     int first_empty_entry = get_first_empty_transition_table_entry(tt);
@@ -98,6 +99,7 @@ transition_table_entry_t * create_and_insert_new_transition_table_entry(
     memcpy(tt->transition_entries[first_empty_entry].state_transition_key, state_transition_key, MAX_TRANSITION_INPUT - 1);
     tt->transition_entries[first_empty_entry].state_transition_key[MAX_TRANSITION_INPUT - 1] = '\0';    
     tt->transition_entries[first_empty_entry].next_state = next_state;
+    tt->transition_entries[first_empty_entry].state_transition_key_size = state_transition_key_size;
 
     return &tt->transition_entries[first_empty_entry];
 }
