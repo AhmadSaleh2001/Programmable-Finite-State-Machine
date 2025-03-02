@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -g
 SRC = main.c fsm.c
 OBJ = $(SRC:.c=.o)
 EXE = main.exe
