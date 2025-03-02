@@ -2,8 +2,7 @@
 #include <stdbool.h>
 #include "fsm.h"
 
-int main() {
-
+void alternate_binary_fsm() {
     fsm_t * fsm = create_new_fsm("strict alternating binary number");
     printf("fsm name: %s\n", fsm->fsm_name);
 
@@ -27,10 +26,15 @@ int main() {
     insert_new_transition_table_entry(s4, "1", 1, s4);
 
     bool result = 0;
-    fsm_error_t error = execute(fsm, "1011101010", 10, &result);
+    fsm_error_t error = execute(fsm, "10101", 5, &result);
 
-    printf("result: %d\n", result);
-    printf("error: %d\n", error);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+}
+
+int main() {
+
+    alternate_binary_fsm();
 
     return 0;
 }
