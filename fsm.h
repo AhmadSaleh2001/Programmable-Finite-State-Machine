@@ -33,7 +33,7 @@ typedef struct fsm
 
 fsm_t * create_new_fsm(char * fsm_name);
 
-fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint16_t size, bool * fsm_result);
+fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_result);
 
 
 typedef struct state {

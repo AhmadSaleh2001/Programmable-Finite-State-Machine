@@ -27,7 +27,7 @@ int main() {
     insert_new_transition_table_entry(s4, "1", 1, s4);
 
     bool result = 0;
-    fsm_error_t error = execute(fsm, "1010101010", 10, &result);
+    fsm_error_t error = execute(fsm, "1011101010", 10, &result);
 
     printf("result: %d\n", result);
     printf("error: %d\n", error);

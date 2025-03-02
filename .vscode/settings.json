@@ -4,6 +4,7 @@
         "state.h": "c",
         "string.h": "c",
         "stdlib.h": "c",
-        "assert.h": "c"
+        "assert.h": "c",
+        "sstream": "c"
     }
 }

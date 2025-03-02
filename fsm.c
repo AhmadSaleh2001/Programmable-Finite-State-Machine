@@ -37,10 +37,16 @@ bool is_same_transition_key(char * str, transition_table_entry_t * transition_ta
     return strcmp(str, transition_table_entry->state_transition_key) == 0;
 }
 
-transition_table_entry_t * transition_table_lookup(transition_table_t * transition_table, char * str) {
+transition_table_entry_t * transition_table_lookup(transition_table_t * transition_table, char * input_buffer, uint8_t buffer_input_cursor, uint8_t buffer_input_size) {
 
+    int remaining = buffer_input_size - buffer_input_cursor;
     for(int i=0;i<MAX_NUMBER_OF_TRANSITION_ENTRIES && !is_transition_table_entry_empty(transition_table->transition_entries[i]);i++) {
-        if(is_same_transition_key(str, &transition_table->transition_entries[i])) {
+        int transition_key_size = transition_table->transition_entries[i].state_transition_key_size;
+        if(remaining < transition_key_size)continue;
+
+        char * input_buffer_substring = malloc(sizeof(char));
+        strncpy(input_buffer_substring, input_buffer + buffer_input_cursor, transition_key_size);
+        if(is_same_transition_key(input_buffer_substring, &transition_table->transition_entries[i])) {
             return &transition_table->transition_entries[i];
         }
     }
@@ -48,22 +54,21 @@ transition_table_entry_t * transition_table_lookup(transition_table_t * transiti
     return NULL;
 }
 
-state_t * get_next_state(state_t * current_state, char * str) {
-    transition_table_entry_t * transition_table_entry = transition_table_lookup(current_state->transition_table, str);
-    if(transition_table_entry)return transition_table_entry->next_state;
-    return NULL;
+state_t * get_next_state(state_t * current_state, char * input_buffer, uint8_t * i, uint8_t buffer_input_size) {
+    transition_table_entry_t * transition_table_entry = transition_table_lookup(current_state->transition_table, input_buffer, *i, buffer_input_size);
+    if(!transition_table_entry)return NULL;
+    (*i)+=transition_table_entry->state_transition_key_size;
+    return transition_table_entry->next_state;
 }
 
-fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint16_t size, bool * fsm_result) {
+fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_result) {
     assert(fsm->initial_state);
 
     state_t * state = fsm->initial_state;
-    for(int i=0;i<size && state != NULL ;i++) {
-        char * substring = malloc(sizeof(char));
-        strncpy(substring, buffer_input + i, 1);
-        state = get_next_state(state, substring);
+    uint8_t i = 0;
+    while(i < size && state) {
+        state = get_next_state(state, buffer_input, &i, size);
     }
-
     if(state == NULL) {
         *fsm_result = 0;
         return FSM_NO_TRANSITION;
