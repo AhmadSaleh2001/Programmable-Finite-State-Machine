@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "fsm.h"
 
 void alternate_binary_fsm() {
@@ -26,7 +27,8 @@ void alternate_binary_fsm() {
     insert_new_transition_table_entry(s4, "1", 1, s4);
 
     bool result = 0;
-    fsm_error_t error = execute(fsm, "10101", 5, &result);
+    char * input_buffer = "10101\0";
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
 
     printf("valid input: %d\n", result);
     printf("error code: %d\n", error);
