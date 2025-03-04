@@ -139,7 +139,7 @@ void balanced_parenthesis_and_up_to_three_nested_levels(char * input_buffer) {
 }
 
 void accept_phone_number_from_6_digits(char * input_buffer) {
-    fsm_t * fsm = create_new_fsm("accept any string with odd number of ones");
+    fsm_t * fsm = create_new_fsm("accept phone number from 6 digits");
 
     state_t * states[8];
     /*
@@ -162,20 +162,91 @@ void accept_phone_number_from_6_digits(char * input_buffer) {
 
     set_state_as_initial_state(fsm, states[0]);
     for(int state_number=0;state_number<6;state_number++) {
-        for(char digit=0;digit<=9;digit++) {
+        for(int digit=0;digit<=9;digit++) {
             char transition_key[MAX_TRANSITION_INPUT - 1];
             snprintf(transition_key, sizeof(transition_key), "%d", digit);
             insert_new_transition_table_entry(states[state_number], transition_key, 1, states[state_number + 1]);
         }
     }
 
-    for(char digit=0;digit<=9;digit++) {
+    for(int digit=0;digit<=9;digit++) {
         char transition_key[MAX_TRANSITION_INPUT - 1];
         snprintf(transition_key, sizeof(transition_key), "%d", digit);
         insert_new_transition_table_entry(states[6], transition_key, 1, states[7]);
         insert_new_transition_table_entry(states[7], transition_key, 1, states[7]);
     }
 
+
+    bool result = 0;
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
+void add_digits_letters(state_t * current_state, state_t * next_state) {
+    for(int digit=0;digit<=9;digit++) {
+        char transition_key[MAX_TRANSITION_INPUT - 1];
+        snprintf(transition_key, sizeof(transition_key), "%d", digit);
+        insert_new_transition_table_entry(current_state, transition_key, 1, next_state);
+    }
+
+    for(char lower_case='a';lower_case<='z';lower_case++) {
+        char transition_key[MAX_TRANSITION_INPUT - 1];
+        snprintf(transition_key, sizeof(transition_key), "%c", lower_case);
+        insert_new_transition_table_entry(current_state, transition_key, 1, next_state);
+    }
+
+    for(char upper_case='A';upper_case<='Z';upper_case++) {
+        char transition_key[MAX_TRANSITION_INPUT - 1];
+        snprintf(transition_key, sizeof(transition_key), "%c", upper_case);
+        insert_new_transition_table_entry(current_state, transition_key, 1, next_state);
+    }
+}
+
+void accept_valid_email_address(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept email valid address");
+    // username@gmail.com or username@hotmail.com
+    // username should be at least 5 chars
+    // username should be formed from lower capital letters and digits (0 - 9)
+
+    state_t * states[9];
+    /*
+        Rules:
+        state0: valid empty string
+        state1: we have 1 char from user name
+        state2: we have 2 chars from user name
+        state3: we have 3 chars from user name
+        state4: we have 4 chars from user name
+        state5: we have 5 chars from user name
+        state6: we have at least 5 chars
+            a. if we got some character, we will go to this state
+        state7: @gmail.com or @hotmail.com => final state
+        state8: invalid state
+    */
+
+    for(int i=0;i<9;i++) {
+        char state_name[MAX_STATE_NAME_LENGTH - 1];
+        snprintf(state_name, sizeof(state_name), "state %d", i + 1);
+        states[i] = create_new_state(state_name, i == 7);
+    }
+
+    set_state_as_initial_state(fsm, states[0]);
+    for(int state_number=0;state_number<6;state_number++) {
+        add_digits_letters(states[state_number], states[state_number + 1]);
+    }
+
+    add_digits_letters(states[6], states[6]);
+
+    char * gmail = "@gmail.com\0";
+    insert_new_transition_table_entry(states[6], gmail, strlen(gmail), states[7]);
+
+    char * hotmail = "@hotmail.com\0";
+    insert_new_transition_table_entry(states[6], gmail, strlen(hotmail), states[7]);
 
     bool result = 0;
     fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
@@ -212,6 +283,14 @@ int main() {
     accept_phone_number_from_6_digits("12356");
     accept_phone_number_from_6_digits("12ahmad0");
     accept_phone_number_from_6_digits("666123");
+
+    accept_valid_email_address("ahmadmfsaleh@gmail.com");
+    accept_valid_email_address("ali@gmail.com");
+    accept_valid_email_address("ali1@hotmail.com");
+    accept_valid_email_address("ali123@yahoo.com");
+    accept_valid_email_address("yousef12434343@gmail.com");
+    accept_valid_email_address("ali123@hotmail.comahmad");
+    accept_valid_email_address("abc");
 
     return 0;
 }

@@ -5,6 +5,8 @@
         "string.h": "c",
         "stdlib.h": "c",
         "assert.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "__locale": "c",
+        "ios": "c"
     }
 }
