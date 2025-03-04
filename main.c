@@ -102,7 +102,7 @@ void accept_odd_number_of_ones(char * input_buffer) {
 void balanced_parenthesis_and_up_to_three_nested_levels(char * input_buffer) {
     fsm_t * fsm = create_new_fsm("accept any string balanced parenthesis and up to three nested levels");
 
-    state_t * s1 = create_new_state("state 1", 1); // inital state, even number of ones
+    state_t * s1 = create_new_state("state 1", 1); // valid empty string
     state_t * s2 = create_new_state("state 2", 0); // level 1
     state_t * s3 = create_new_state("state 3", 0); // level 2
     state_t * s4 = create_new_state("state 4", 0); // level 3
@@ -138,6 +138,56 @@ void balanced_parenthesis_and_up_to_three_nested_levels(char * input_buffer) {
     printf("\n-------\n");
 }
 
+void accept_phone_number_from_6_digits(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept any string with odd number of ones");
+
+    state_t * states[8];
+    /*
+        Rules:
+        state0: valid empty string
+        state1: we have 1 digit
+        state2: we have 2 digit
+        state3: we have 3 digit
+        state4: we have 4 digit
+        state5: we have 5 digit
+        state6: we have 6 digit
+        state7: invalid state
+    */
+
+    for(int i=0;i<8;i++) {
+        char state_name[MAX_STATE_NAME_LENGTH - 1];
+        snprintf(state_name, sizeof(state_name), "state %d", i + 1);
+        states[i] = create_new_state(state_name, i == 6);
+    }
+
+    set_state_as_initial_state(fsm, states[0]);
+    for(int state_number=0;state_number<6;state_number++) {
+        for(char digit=0;digit<=9;digit++) {
+            char transition_key[MAX_TRANSITION_INPUT - 1];
+            snprintf(transition_key, sizeof(transition_key), "%d", digit);
+            insert_new_transition_table_entry(states[state_number], transition_key, 1, states[state_number + 1]);
+        }
+    }
+
+    for(char digit=0;digit<=9;digit++) {
+        char transition_key[MAX_TRANSITION_INPUT - 1];
+        snprintf(transition_key, sizeof(transition_key), "%d", digit);
+        insert_new_transition_table_entry(states[6], transition_key, 1, states[7]);
+        insert_new_transition_table_entry(states[7], transition_key, 1, states[7]);
+    }
+
+
+    bool result = 0;
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
 int main() {
 
     alternate_binary_fsm("010101010101\0");
@@ -157,6 +207,11 @@ int main() {
     balanced_parenthesis_and_up_to_three_nested_levels("(())()()()\0");
     balanced_parenthesis_and_up_to_three_nested_levels("(())()()()(\0");
     balanced_parenthesis_and_up_to_three_nested_levels("(())()()())\0");
+
+
+    accept_phone_number_from_6_digits("12356");
+    accept_phone_number_from_6_digits("12ahmad0");
+    accept_phone_number_from_6_digits("666123");
 
     return 0;
 }
