@@ -33,7 +33,7 @@ void alternate_binary_fsm(char * input_buffer) {
 }
 
 void fsm_accept_at_the_end_00_or_11(char * input_buffer) {
-    fsm_t * fsm = create_new_fsm("strict alternating binary number");
+    fsm_t * fsm = create_new_fsm("accept any string ends with 00 or 11");
 
     state_t * s1 = create_new_state("state 1", 0); // inital state
     state_t * s2 = create_new_state("state 2", 0); // when we have one zero
@@ -68,12 +68,39 @@ void fsm_accept_at_the_end_00_or_11(char * input_buffer) {
     printf("\n-------\n");
 }
 
+void accept_odd_number_of_ones(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept any string with odd number of ones");
+
+    state_t * s1 = create_new_state("state 1", 0); // inital state, even number of ones
+    state_t * s2 = create_new_state("state 2", 1); // odd number of ones
+
+    set_state_as_initial_state(fsm, s1);
+
+    insert_new_transition_table_entry(s1, "0", 1, s1);
+    insert_new_transition_table_entry(s1, "1", 1, s2);
+
+    insert_new_transition_table_entry(s2, "0", 1, s2);
+    insert_new_transition_table_entry(s2, "1", 1, s1);
+
+
+    bool result = 0;
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
+
+    printf("\n-------\n");
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
 int main() {
 
     // alternate_binary_fsm("0101011\0");
-    fsm_accept_at_the_end_00_or_11("01010100\0");
-    fsm_accept_at_the_end_00_or_11("000111010\0");
-    fsm_accept_at_the_end_00_or_11("00ahmad0111010\0"); // invalid case
-
+    // fsm_accept_at_the_end_00_or_11("01010100\0");
+    // fsm_accept_at_the_end_00_or_11("000111010\0");
+    // fsm_accept_at_the_end_00_or_11("00ahmad0111010\0"); // invalid case
+    accept_odd_number_of_ones("01100000001\0");
+    accept_odd_number_of_ones("111\0");
+    accept_odd_number_of_ones("01100001001\0");
     return 0;
 }
