@@ -28,8 +28,12 @@ void alternate_binary_fsm(char * input_buffer) {
     bool result = 0;
     fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
 
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
     printf("valid input: %d\n", result);
     printf("error code: %d\n", error);
+    printf("\n-------\n");
 }
 
 void fsm_accept_at_the_end_00_or_11(char * input_buffer) {
@@ -62,6 +66,7 @@ void fsm_accept_at_the_end_00_or_11(char * input_buffer) {
     fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
 
     printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
     printf("result for input buffer: %s\n", input_buffer);
     printf("valid input: %d\n", result);
     printf("error code: %d\n", error);
@@ -87,6 +92,46 @@ void accept_odd_number_of_ones(char * input_buffer) {
     fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
 
     printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
+void balanced_parenthesis_and_up_to_three_nested_levels(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept any string balanced parenthesis and up to three nested levels");
+
+    state_t * s1 = create_new_state("state 1", 1); // inital state, even number of ones
+    state_t * s2 = create_new_state("state 2", 0); // level 1
+    state_t * s3 = create_new_state("state 3", 0); // level 2
+    state_t * s4 = create_new_state("state 4", 0); // level 3
+    state_t * s5 = create_new_state("state 5", 0); // invalid state
+
+    set_state_as_initial_state(fsm, s1);
+
+    insert_new_transition_table_entry(s1, "(", 1, s2);
+    insert_new_transition_table_entry(s1, ")", 1, s5);
+
+    insert_new_transition_table_entry(s2, "(", 1, s3);
+    insert_new_transition_table_entry(s2, ")", 1, s1);
+
+    insert_new_transition_table_entry(s3, "(", 1, s4);
+    insert_new_transition_table_entry(s3, ")", 1, s2);
+
+    insert_new_transition_table_entry(s4, "(", 1, s5);
+    insert_new_transition_table_entry(s4, ")", 1, s3);
+
+
+    insert_new_transition_table_entry(s5, "(", 1, s5);
+    insert_new_transition_table_entry(s5, ")", 1, s5);
+
+
+    bool result = 0;
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
     printf("result for input buffer: %s\n", input_buffer);
     printf("valid input: %d\n", result);
     printf("error code: %d\n", error);
@@ -95,12 +140,23 @@ void accept_odd_number_of_ones(char * input_buffer) {
 
 int main() {
 
-    // alternate_binary_fsm("0101011\0");
-    // fsm_accept_at_the_end_00_or_11("01010100\0");
-    // fsm_accept_at_the_end_00_or_11("000111010\0");
-    // fsm_accept_at_the_end_00_or_11("00ahmad0111010\0"); // invalid case
+    alternate_binary_fsm("010101010101\0");
+    alternate_binary_fsm("0101011\0");
+
+    fsm_accept_at_the_end_00_or_11("01010100\0");
+    fsm_accept_at_the_end_00_or_11("000111010\0");
+    fsm_accept_at_the_end_00_or_11("00ahmad0111010\0"); // invalid case
+
     accept_odd_number_of_ones("01100000001\0");
     accept_odd_number_of_ones("111\0");
     accept_odd_number_of_ones("01100001001\0");
+
+    balanced_parenthesis_and_up_to_three_nested_levels("((()))\0");
+    balanced_parenthesis_and_up_to_three_nested_levels("(((())))\0");
+    balanced_parenthesis_and_up_to_three_nested_levels("(()\0");
+    balanced_parenthesis_and_up_to_three_nested_levels("(())()()()\0");
+    balanced_parenthesis_and_up_to_three_nested_levels("(())()()()(\0");
+    balanced_parenthesis_and_up_to_three_nested_levels("(())()()())\0");
+
     return 0;
 }
