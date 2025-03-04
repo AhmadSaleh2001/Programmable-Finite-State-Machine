@@ -14,8 +14,8 @@ typedef struct transition_table_entry transition_table_entry_t;
 #define MAX_INPUT_FROM_USER 127
 
 typedef enum {
-    FSM_NO_TRANSITION,
     FSM_NO_ERROR,
+    FSM_NO_TRANSITION
 } fsm_error_t;
 
 typedef struct fsm
