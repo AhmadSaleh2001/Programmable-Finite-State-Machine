@@ -29,8 +29,8 @@ void set_state_as_initial_state(fsm_t * fsm, state_t * state) {
     fsm->initial_state = state;
 }
 
-void insert_new_transition_table_entry(state_t * state, char * state_transition_key, uint8_t state_transition_key_size, state_t * next_state) {
-    create_and_insert_new_transition_table_entry(state->transition_table, state_transition_key, state_transition_key_size, next_state);
+void insert_new_transition_table_entry(state_t * state, char * state_transition_key, char * state_transition_output, state_t * next_state) {
+    create_and_insert_new_transition_table_entry(state->transition_table, state_transition_key, state_transition_output, next_state);
 }
 
 bool is_same_transition_key(char * str, transition_table_entry_t * transition_table_entry) {
@@ -54,25 +54,31 @@ transition_table_entry_t * transition_table_lookup(transition_table_t * transiti
     return NULL;
 }
 
-state_t * get_next_state(state_t * current_state, char * input_buffer, uint8_t * i, uint8_t buffer_input_size) {
+state_t * get_next_state(state_t * current_state, char * input_buffer, uint8_t * i, uint8_t buffer_input_size, char * fsm_output, int * fsm_output_cursor) {
     transition_table_entry_t * transition_table_entry = transition_table_lookup(current_state->transition_table, input_buffer, *i, buffer_input_size);
     if(!transition_table_entry)return NULL;
     (*i)+=transition_table_entry->state_transition_key_size;
+    for(int j=0;j<transition_table_entry->state_transition_output_size;j++) {
+        fsm_output[*fsm_output_cursor] = transition_table_entry->transition_output[j];
+        *fsm_output_cursor = *fsm_output_cursor + 1;
+    }
     return transition_table_entry->next_state;
 }
 
-fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_result) {
+fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_result, char * fsm_output) {
     assert(fsm->initial_state);
 
     state_t * state = fsm->initial_state;
-    uint8_t i = 0;
-    while(i < size && state) {
-        state = get_next_state(state, buffer_input, &i, size);
+    int fsm_output_cursor = 0;
+    while(fsm->input_buffer_cursor < size && state) {
+        state = get_next_state(state, buffer_input, &fsm->input_buffer_cursor, size, fsm_output, &fsm_output_cursor);
     }
     if(state == NULL) {
         *fsm_result = 0;
         return FSM_NO_TRANSITION;
     }
+    printf("fsm transition_output cursor cursor: %d\n", fsm_output_cursor);
+    // fsm_output[fsm_output_cursor] = '\0';
     *fsm_result = state->is_final_state == true;
     return FSM_NO_ERROR;
 }
@@ -96,15 +102,21 @@ int get_first_empty_transition_table_entry(transition_table_t * transition_table
 transition_table_entry_t * create_and_insert_new_transition_table_entry(
     transition_table_t * tt,
     char * state_transition_key,
-    uint8_t state_transition_key_size,
+    char * state_transition_output,
     state_t * next_state
 ) {
     int first_empty_entry = get_first_empty_transition_table_entry(tt);
     assert(first_empty_entry != -1);
+
     memcpy(tt->transition_entries[first_empty_entry].state_transition_key, state_transition_key, MAX_TRANSITION_INPUT - 1);
-    tt->transition_entries[first_empty_entry].state_transition_key[MAX_TRANSITION_INPUT - 1] = '\0';    
+    tt->transition_entries[first_empty_entry].state_transition_key[MAX_TRANSITION_INPUT - 1] = '\0';
+    tt->transition_entries[first_empty_entry].state_transition_key_size = strlen(state_transition_key);
+    
+    memcpy(tt->transition_entries[first_empty_entry].transition_output, state_transition_output, MAX_TRANSITION_OUTPUT - 1);
+    tt->transition_entries[first_empty_entry].transition_output[MAX_TRANSITION_OUTPUT - 1] = '\0';
+    tt->transition_entries[first_empty_entry].state_transition_output_size = strlen(state_transition_output);
+
     tt->transition_entries[first_empty_entry].next_state = next_state;
-    tt->transition_entries[first_empty_entry].state_transition_key_size = state_transition_key_size;
 
     return &tt->transition_entries[first_empty_entry];
 }

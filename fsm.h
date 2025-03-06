@@ -33,7 +33,7 @@ typedef struct fsm
 
 fsm_t * create_new_fsm(char * fsm_name);
 
-fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_result);
+fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_result, char * fsm_output);
 
 
 typedef struct state {
@@ -49,20 +49,23 @@ void set_state_as_initial_state(fsm_t * fsm, state_t * state);
 void insert_new_transition_table_entry(
     state_t * state,
     char * state_transition_key,
-    uint8_t state_transition_key_size,
+    char * state_transition_output,
     state_t * next_state
 );
 
 
 
 #define MAX_TRANSITION_INPUT 255
-// #define MAX_TRANSITION_OUTPUT 255
+#define MAX_TRANSITION_OUTPUT 255
 
 struct transition_table_entry
 {
     char state_transition_key[MAX_TRANSITION_INPUT];
     uint8_t state_transition_key_size;
-    // char output[MAX_TRANSITION_OUTPUT];
+
+    char transition_output[MAX_TRANSITION_OUTPUT];
+    uint8_t state_transition_output_size;
+
     state_t * next_state;
 
 };
@@ -72,7 +75,7 @@ bool is_transition_table_entry_empty(transition_table_entry_t transition_table_e
 transition_table_entry_t * create_and_insert_new_transition_table_entry(
     transition_table_t * tt,
     char * state_transition_key,
-    uint8_t state_transition_key_size,
+    char * state_transition_output,
     state_t * next_state
 );
 
