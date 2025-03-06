@@ -77,8 +77,7 @@ fsm_error_t execute(fsm_t * fsm, char * buffer_input, uint8_t size, bool * fsm_r
         *fsm_result = 0;
         return FSM_NO_TRANSITION;
     }
-    printf("fsm transition_output cursor cursor: %d\n", fsm_output_cursor);
-    // fsm_output[fsm_output_cursor] = '\0';
+    fsm_output[fsm_output_cursor] = '\0';
     *fsm_result = state->is_final_state == true;
     return FSM_NO_ERROR;
 }
