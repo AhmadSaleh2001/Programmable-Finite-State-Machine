@@ -309,6 +309,49 @@ void accept_valid_email_address(char * input_buffer) {
     printf("\n-------\n");
 }
 
+void reverse_string(char * input_buffer) {
+    int l = 0, r = strlen(input_buffer) - 1;
+    while(r > l) {
+        char t = input_buffer[l];
+        input_buffer[l] = input_buffer[r];
+        input_buffer[r] = t;
+        r--, l++;
+    }
+}
+
+void accept_binary_string_and_output_twos_complement(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept any binary string and output two's complement");
+
+    // we need to reverse the input buffer to take LSB firstly while processing it
+    reverse_string(input_buffer);
+
+    state_t * s1 = create_new_state("state 1", 1); // inital state and we have +1
+    state_t * s2 = create_new_state("state 2", 1); // we dont have 1
+
+    set_state_as_initial_state(fsm, s1);
+
+    insert_new_transition_table_entry(s1, "0", "0", s1);
+    insert_new_transition_table_entry(s1, "1", "1", s2);
+
+    insert_new_transition_table_entry(s2, "0", "1", s2);
+    insert_new_transition_table_entry(s2, "1", "0", s2);
+
+    bool result = 0;
+    char fsm_output[MAX_TRANSITION_OUTPUT];
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result, fsm_output);
+
+    reverse_string(fsm_output);
+    reverse_string(input_buffer);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("fsm transition_output: %s\n", fsm_output);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
 int main() {
 
     alternate_binary_fsm("010101010101\0");
@@ -343,6 +386,11 @@ int main() {
     accept_valid_email_address("yousef12434343@gmail.com");
     accept_valid_email_address("ali123@hotmail.comahmad");
     accept_valid_email_address("abc");
+
+    accept_binary_string_and_output_twos_complement(strdup("111111"));
+    accept_binary_string_and_output_twos_complement(strdup("000000"));
+    accept_binary_string_and_output_twos_complement(strdup("000101"));
+    accept_binary_string_and_output_twos_complement(strdup("00010001"));
 
     return 0;
 }
