@@ -3,15 +3,16 @@
 #include <inttypes.h>
 #include <assert.h>
 
-#define MAX_STATE_NAME_LENGTH 255
+#define MAX_STATE_NAME_LENGTH 50
 
 typedef struct fsm fsm_t;
 typedef struct state state_t;
 typedef struct transition_table transition_table_t;
 typedef struct transition_table_entry transition_table_entry_t;
+typedef int (*StateMatcher)(char *, uint8_t);
 
-#define MAX_FSM_NAME_LENGTH 255
-#define MAX_INPUT_FROM_USER 127
+#define MAX_FSM_NAME_LENGTH 50
+#define MAX_INPUT_FROM_USER 50
 
 typedef enum {
     FSM_NO_ERROR,
@@ -50,13 +51,14 @@ void insert_new_transition_table_entry(
     state_t * state,
     char * state_transition_key,
     char * state_transition_output,
+    StateMatcher matcher,
     state_t * next_state
 );
 
 
 
-#define MAX_TRANSITION_INPUT 255
-#define MAX_TRANSITION_OUTPUT 255
+#define MAX_TRANSITION_INPUT 50
+#define MAX_TRANSITION_OUTPUT 50
 
 struct transition_table_entry
 {
@@ -65,6 +67,8 @@ struct transition_table_entry
 
     char transition_output[MAX_TRANSITION_OUTPUT];
     uint8_t state_transition_output_size;
+
+    StateMatcher matcher;
 
     state_t * next_state;
 
@@ -76,13 +80,14 @@ transition_table_entry_t * create_and_insert_new_transition_table_entry(
     transition_table_t * tt,
     char * state_transition_key,
     char * state_transition_output,
+    StateMatcher matcher,
     state_t * next_state
 );
 
 
 
 
-#define MAX_NUMBER_OF_TRANSITION_ENTRIES 255
+#define MAX_NUMBER_OF_TRANSITION_ENTRIES 256
 
 struct transition_table
 {

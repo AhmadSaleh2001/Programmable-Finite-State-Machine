@@ -13,17 +13,17 @@ void alternate_binary_fsm(char * input_buffer) {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "0", "1", s2);
-    insert_new_transition_table_entry(s1, "1", "0", s3);
+    insert_new_transition_table_entry(s1, "0", "1", NULL, s2);
+    insert_new_transition_table_entry(s1, "1", "0", NULL, s3);
 
-    insert_new_transition_table_entry(s2, "0", "!", s4);
-    insert_new_transition_table_entry(s2, "1", "0", s3);
+    insert_new_transition_table_entry(s2, "0", "!", NULL, s4);
+    insert_new_transition_table_entry(s2, "1", "0", NULL, s3);
 
-    insert_new_transition_table_entry(s3, "0", "1", s2);
-    insert_new_transition_table_entry(s3, "1", "!", s4);
+    insert_new_transition_table_entry(s3, "0", "1", NULL, s2);
+    insert_new_transition_table_entry(s3, "1", "!", NULL, s4);
 
-    insert_new_transition_table_entry(s4, "0", "!", s4);
-    insert_new_transition_table_entry(s4, "1", "!", s4);
+    insert_new_transition_table_entry(s4, "0", "!", NULL, s4);
+    insert_new_transition_table_entry(s4, "1", "!", NULL, s4);
 
     bool result = 0;
     char fsm_output[MAX_TRANSITION_OUTPUT];
@@ -49,20 +49,20 @@ void fsm_accept_at_the_end_00_or_11(char * input_buffer) {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "0", "\0", s2);
-    insert_new_transition_table_entry(s1, "1", "\0", s4);
+    insert_new_transition_table_entry(s1, "0", "\0", NULL, s2);
+    insert_new_transition_table_entry(s1, "1", "\0", NULL, s4);
 
-    insert_new_transition_table_entry(s2, "0", "\0", s3);
-    insert_new_transition_table_entry(s2, "1", "\0", s4);
+    insert_new_transition_table_entry(s2, "0", "\0", NULL, s3);
+    insert_new_transition_table_entry(s2, "1", "\0", NULL, s4);
 
-    insert_new_transition_table_entry(s3, "0", "\0", s3);
-    insert_new_transition_table_entry(s3, "1", "\0", s4);
+    insert_new_transition_table_entry(s3, "0", "\0", NULL, s3);
+    insert_new_transition_table_entry(s3, "1", "\0", NULL, s4);
 
-    insert_new_transition_table_entry(s4, "0", "\0", s2);
-    insert_new_transition_table_entry(s4, "1", "\0", s5);
+    insert_new_transition_table_entry(s4, "0", "\0", NULL, s2);
+    insert_new_transition_table_entry(s4, "1", "\0", NULL, s5);
 
-    insert_new_transition_table_entry(s5, "0", "\0", s2);
-    insert_new_transition_table_entry(s5, "1", "\0", s5);
+    insert_new_transition_table_entry(s5, "0", "\0", NULL, s2);
+    insert_new_transition_table_entry(s5, "1", "\0", NULL, s5);
 
     bool result = 0;
     char fsm_output[MAX_TRANSITION_OUTPUT];
@@ -88,20 +88,20 @@ void fsm_accept_at_the_end_aa_or_bb(char * input_buffer) {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "a", "0", s2);
-    insert_new_transition_table_entry(s1, "b", "0", s4);
+    insert_new_transition_table_entry(s1, "a", "0", NULL, s2);
+    insert_new_transition_table_entry(s1, "b", "0", NULL, s4);
 
-    insert_new_transition_table_entry(s2, "a", "1", s3);
-    insert_new_transition_table_entry(s2, "b", "0", s4);
+    insert_new_transition_table_entry(s2, "a", "1", NULL, s3);
+    insert_new_transition_table_entry(s2, "b", "0", NULL, s4);
 
-    insert_new_transition_table_entry(s3, "a", "1", s3);
-    insert_new_transition_table_entry(s3, "b", "0", s4);
+    insert_new_transition_table_entry(s3, "a", "1", NULL, s3);
+    insert_new_transition_table_entry(s3, "b", "0", NULL, s4);
 
-    insert_new_transition_table_entry(s4, "a", "0", s2);
-    insert_new_transition_table_entry(s4, "b", "1", s5);
+    insert_new_transition_table_entry(s4, "a", "0", NULL, s2);
+    insert_new_transition_table_entry(s4, "b", "1", NULL, s5);
 
-    insert_new_transition_table_entry(s5, "a", "0", s2);
-    insert_new_transition_table_entry(s5, "b", "1", s5);
+    insert_new_transition_table_entry(s5, "a", "0", NULL, s2);
+    insert_new_transition_table_entry(s5, "b", "1", NULL, s5);
 
     bool result = 0;
     char fsm_output[MAX_TRANSITION_OUTPUT];
@@ -124,11 +124,11 @@ void accept_odd_number_of_ones(char * input_buffer) {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "0", "", s1);
-    insert_new_transition_table_entry(s1, "1", "", s2);
+    insert_new_transition_table_entry(s1, "0", "", NULL, s1);
+    insert_new_transition_table_entry(s1, "1", "", NULL, s2);
 
-    insert_new_transition_table_entry(s2, "0", "", s2);
-    insert_new_transition_table_entry(s2, "1", "", s1);
+    insert_new_transition_table_entry(s2, "0", "", NULL, s2);
+    insert_new_transition_table_entry(s2, "1", "", NULL, s1);
 
 
     bool result = 0;
@@ -155,20 +155,20 @@ void balanced_parenthesis_and_up_to_three_nested_levels(char * input_buffer) {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "(", "\0", s2);
-    insert_new_transition_table_entry(s1, ")", "\0", s5);
+    insert_new_transition_table_entry(s1, "(", "\0", NULL, s2);
+    insert_new_transition_table_entry(s1, ")", "\0", NULL, s5);
 
-    insert_new_transition_table_entry(s2, "(", "\0", s3);
-    insert_new_transition_table_entry(s2, ")", "\0", s1);
+    insert_new_transition_table_entry(s2, "(", "\0", NULL, s3);
+    insert_new_transition_table_entry(s2, ")", "\0", NULL, s1);
 
-    insert_new_transition_table_entry(s3, "(", "\0", s4);
-    insert_new_transition_table_entry(s3, ")", "\0", s2);
+    insert_new_transition_table_entry(s3, "(", "\0", NULL, s4);
+    insert_new_transition_table_entry(s3, ")", "\0", NULL, s2);
 
-    insert_new_transition_table_entry(s4, "(", "\0", s5);
-    insert_new_transition_table_entry(s4, ")", "\0", s3);
+    insert_new_transition_table_entry(s4, "(", "\0", NULL, s5);
+    insert_new_transition_table_entry(s4, ")", "\0", NULL, s3);
 
-    insert_new_transition_table_entry(s5, "(", "\0", s5);
-    insert_new_transition_table_entry(s5, ")", "\0", s5);
+    insert_new_transition_table_entry(s5, "(", "\0", NULL, s5);
+    insert_new_transition_table_entry(s5, ")", "\0", NULL, s5);
 
 
     bool result = 0;
@@ -211,15 +211,15 @@ void accept_phone_number_from_6_digits(char * input_buffer) {
         for(int digit=0;digit<=9;digit++) {
             char transition_key[MAX_TRANSITION_INPUT - 1];
             snprintf(transition_key, sizeof(transition_key), "%d", digit);
-            insert_new_transition_table_entry(states[state_number], transition_key, "\0", states[state_number + 1]);
+            insert_new_transition_table_entry(states[state_number], transition_key, "\0", NULL, states[state_number + 1]);
         }
     }
 
     for(int digit=0;digit<=9;digit++) {
         char transition_key[MAX_TRANSITION_INPUT - 1];
         snprintf(transition_key, sizeof(transition_key), "%d", digit);
-        insert_new_transition_table_entry(states[6], transition_key, "\0", states[7]);
-        insert_new_transition_table_entry(states[7], transition_key, "\0", states[7]);
+        insert_new_transition_table_entry(states[6], transition_key, "\0", NULL, states[7]);
+        insert_new_transition_table_entry(states[7], transition_key, "\0", NULL, states[7]);
     }
 
 
@@ -240,19 +240,19 @@ void add_digits_letters(state_t * current_state, state_t * next_state) {
     for(int digit=0;digit<=9;digit++) {
         char transition_key[MAX_TRANSITION_INPUT - 1];
         snprintf(transition_key, sizeof(transition_key), "%d", digit);
-        insert_new_transition_table_entry(current_state, transition_key, "\0", next_state);
+        insert_new_transition_table_entry(current_state, transition_key, "\0", NULL, next_state);
     }
 
     for(char lower_case='a';lower_case<='z';lower_case++) {
         char transition_key[MAX_TRANSITION_INPUT - 1];
         snprintf(transition_key, sizeof(transition_key), "%c", lower_case);
-        insert_new_transition_table_entry(current_state, transition_key, "\0", next_state);
+        insert_new_transition_table_entry(current_state, transition_key, "\0", NULL, next_state);
     }
 
     for(char upper_case='A';upper_case<='Z';upper_case++) {
         char transition_key[MAX_TRANSITION_INPUT - 1];
         snprintf(transition_key, sizeof(transition_key), "%c", upper_case);
-        insert_new_transition_table_entry(current_state, transition_key, "\0", next_state);
+        insert_new_transition_table_entry(current_state, transition_key, "\0", NULL, next_state);
     }
 }
 
@@ -291,10 +291,75 @@ void accept_valid_email_address(char * input_buffer) {
     add_digits_letters(states[6], states[6]);
 
     char * gmail = "@gmail.com\0";
-    insert_new_transition_table_entry(states[6], gmail, "\0", states[7]);
+    insert_new_transition_table_entry(states[6], gmail, "\0", NULL, states[7]);
 
     char * hotmail = "@hotmail.com\0";
-    insert_new_transition_table_entry(states[6], gmail, "\0", states[7]);
+    insert_new_transition_table_entry(states[6], hotmail, "\0", NULL, states[7]);
+
+    bool result = 0;
+    char fsm_output[MAX_TRANSITION_OUTPUT];
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result, fsm_output);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("fsm transition_output: %s\n", fsm_output);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
+int match_letter_or_digit(char * input_buffer, uint8_t input_buffer_cursor) {
+    int length = strlen(input_buffer);
+    int remaining = length - input_buffer_cursor;
+
+    // because we want to take one character
+    if(remaining < 1)return 0;
+    bool ans = input_buffer[input_buffer_cursor] >= 'a' && input_buffer[input_buffer_cursor] <= 'z';
+    ans |= input_buffer[input_buffer_cursor] >= 'A' && input_buffer[input_buffer_cursor] <= 'Z';
+    ans |= input_buffer[input_buffer_cursor] >= '0' && input_buffer[input_buffer_cursor] <= '9';
+    return ans;
+}
+
+void optimized_accept_valid_email_address(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("optimized accept email valid address");
+    // username@gmail.com or username@hotmail.com
+    // username should be at least 5 chars
+    // username should be formed from lower capital letters and digits (0 - 9)
+
+    state_t * states[9];
+    /*
+        Rules:
+        state0: valid empty string
+        state1: we have 1 char from user name
+        state2: we have 2 chars from user name
+        state3: we have 3 chars from user name
+        state4: we have 4 chars from user name
+        state5: we have 5 chars from user name
+        state6: we have at least 5 chars
+            a. if we got some character, we will go to this state
+        state7: @gmail.com or @hotmail.com => final state
+        state8: invalid state
+    */
+
+    for(int i=0;i<9;i++) {
+        char state_name[MAX_STATE_NAME_LENGTH - 1];
+        snprintf(state_name, sizeof(state_name), "state %d", i + 1);
+        states[i] = create_new_state(state_name, i == 7);
+    }
+
+    set_state_as_initial_state(fsm, states[0]);
+    for(int state_number=0;state_number<6;state_number++) {
+        insert_new_transition_table_entry(states[state_number], NULL, "\0", match_letter_or_digit, states[state_number + 1]);
+    }
+
+    insert_new_transition_table_entry(states[6], NULL, "\0", match_letter_or_digit, states[6]);
+
+    char * gmail = "@gmail.com\0";
+    insert_new_transition_table_entry(states[6], gmail, "\0", NULL, states[7]);
+
+    char * hotmail = "@hotmail.com\0";
+    insert_new_transition_table_entry(states[6], hotmail, "\0", NULL, states[7]);
 
     bool result = 0;
     char fsm_output[MAX_TRANSITION_OUTPUT];
@@ -330,11 +395,11 @@ void accept_binary_string_and_output_twos_complement(char * input_buffer) {
 
     set_state_as_initial_state(fsm, s1);
 
-    insert_new_transition_table_entry(s1, "0", "0", s1);
-    insert_new_transition_table_entry(s1, "1", "1", s2);
+    insert_new_transition_table_entry(s1, "0", "0", NULL, s1);
+    insert_new_transition_table_entry(s1, "1", "1", NULL, s2);
 
-    insert_new_transition_table_entry(s2, "0", "1", s2);
-    insert_new_transition_table_entry(s2, "1", "0", s2);
+    insert_new_transition_table_entry(s2, "0", "1", NULL, s2);
+    insert_new_transition_table_entry(s2, "1", "0", NULL, s2);
 
     bool result = 0;
     char fsm_output[MAX_TRANSITION_OUTPUT];
@@ -384,7 +449,7 @@ void accept_binary_string_and_output_hexadecimal(char * input_buffer) {
     for(int i=0;i<16;i++) {
         char * binary_string = int_to_binary_string(i);
         reverse_string(binary_string);
-        insert_new_transition_table_entry(s1, binary_string, int_to_hex_string(i), s1);
+        insert_new_transition_table_entry(s1, binary_string, int_to_hex_string(i), NULL, s1);
     }
 
     bool result = 0;
@@ -435,8 +500,19 @@ int main() {
     accept_valid_email_address("ali1@hotmail.com");
     accept_valid_email_address("ali123@yahoo.com");
     accept_valid_email_address("yousef12434343@gmail.com");
+    accept_valid_email_address("ali123@hotmail.com");
     accept_valid_email_address("ali123@hotmail.comahmad");
     accept_valid_email_address("abc");
+
+
+    optimized_accept_valid_email_address("ahmadmfsaleh@gmail.com");
+    optimized_accept_valid_email_address("ali@gmail.com");
+    optimized_accept_valid_email_address("ali1@hotmail.com");
+    optimized_accept_valid_email_address("ali123@yahoo.com");
+    optimized_accept_valid_email_address("yousef12434343@gmail.com");
+    optimized_accept_valid_email_address("ali123@hotmail.com");
+    optimized_accept_valid_email_address("ali123@hotmail.comahmad");
+    optimized_accept_valid_email_address("abc");
 
     accept_binary_string_and_output_twos_complement(strdup("111111"));
     accept_binary_string_and_output_twos_complement(strdup("000000"));

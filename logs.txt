@@ -1,0 +1,369 @@
+
+-------
+----------- fsm name: strict alternating binary number ----------- 
+result for input buffer: 010101010101
+fsm transition_output: 101010101010
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: strict alternating binary number ----------- 
+result for input buffer: 0100101111
+fsm transition_output: 101!!!!!!!
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string ends with 00 or 11 ----------- 
+result for input buffer: 01010100
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string ends with 00 or 11 ----------- 
+result for input buffer: 000111010
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string ends with 00 or 11 ----------- 
+result for input buffer: 00ahmad0111010
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept any string ends with aa or bb ----------- 
+result for input buffer: aababaabbbaaabbabababb
+fsm transition_output: 0100001011011010000001
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string with odd number of ones ----------- 
+result for input buffer: 01100000001
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string with odd number of ones ----------- 
+result for input buffer: 111
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string with odd number of ones ----------- 
+result for input buffer: 01100001001
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string balanced parenthesis and up to  ----------- 
+result for input buffer: ((()))
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string balanced parenthesis and up to  ----------- 
+result for input buffer: (((())))
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string balanced parenthesis and up to  ----------- 
+result for input buffer: (()
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string balanced parenthesis and up to  ----------- 
+result for input buffer: (())()()()
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string balanced parenthesis and up to  ----------- 
+result for input buffer: (())()()()(
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any string balanced parenthesis and up to  ----------- 
+result for input buffer: (())()()())
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept phone number from 6 digits ----------- 
+result for input buffer: 12356
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept phone number from 6 digits ----------- 
+result for input buffer: 12ahmad0
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept phone number from 6 digits ----------- 
+result for input buffer: 666123
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: ahmadmfsaleh@gmail.com
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: ali@gmail.com
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: ali1@hotmail.com
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: ali123@yahoo.com
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: yousef12434343@gmail.com
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: ali123@hotmail.com
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: ali123@hotmail.comahmad
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept email valid address ----------- 
+result for input buffer: abc
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: ahmadmfsaleh@gmail.com
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: ali@gmail.com
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: ali1@hotmail.com
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: ali123@yahoo.com
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: yousef12434343@gmail.com
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: ali123@hotmail.com
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: ali123@hotmail.comahmad
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: optimized accept email valid address ----------- 
+result for input buffer: abc
+fsm transition_output: 
+valid input: 0
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output two's complem ----------- 
+result for input buffer: 111111
+fsm transition_output: 000001
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output two's complem ----------- 
+result for input buffer: 000000
+fsm transition_output: 000000
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output two's complem ----------- 
+result for input buffer: 000101
+fsm transition_output: 111011
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output two's complem ----------- 
+result for input buffer: 00010001
+fsm transition_output: 11101111
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output hexadecimal ----------- 
+result for input buffer: 1000
+fsm transition_output: 8
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output hexadecimal ----------- 
+result for input buffer: 1110
+fsm transition_output: E
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept any binary string and output hexadecimal ----------- 
+result for input buffer: 101101110101
+fsm transition_output: B75
+valid input: 1
+error code: 0
+
+-------
