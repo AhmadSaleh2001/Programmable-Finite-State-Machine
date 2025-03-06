@@ -352,6 +352,57 @@ void accept_binary_string_and_output_twos_complement(char * input_buffer) {
     printf("\n-------\n");
 }
 
+char * int_to_binary_string(int num) {
+    char *binary_str = strdup("0000");
+    for(int i=0;i<4;i++) {
+        if((num>>i)&1)binary_str[3 - i] = '1';
+    }
+    return binary_str;
+}
+
+char * int_to_hex_string(int num) {
+    assert(num >= 0 && num <= 15);
+    char *hex_str = strdup("0");
+    if(num < 10) {
+        hex_str[0] = num + '0';
+    } else {
+        hex_str[0] = (num - 10) + 'A';
+    }
+    return hex_str;
+}
+
+void accept_binary_string_and_output_hexadecimal(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept any binary string and output hexadecimal");
+
+    // we need to reverse the input buffer to take LSB firstly while processing it
+    reverse_string(input_buffer);
+
+    state_t * s1 = create_new_state("state 1", 1);
+
+    set_state_as_initial_state(fsm, s1);
+
+    for(int i=0;i<16;i++) {
+        char * binary_string = int_to_binary_string(i);
+        reverse_string(binary_string);
+        insert_new_transition_table_entry(s1, binary_string, int_to_hex_string(i), s1);
+    }
+
+    bool result = 0;
+    char fsm_output[MAX_TRANSITION_OUTPUT];
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result, fsm_output);
+
+    reverse_string(fsm_output);
+    reverse_string(input_buffer);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("fsm transition_output: %s\n", fsm_output);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
 int main() {
 
     alternate_binary_fsm("010101010101\0");
@@ -391,6 +442,10 @@ int main() {
     accept_binary_string_and_output_twos_complement(strdup("000000"));
     accept_binary_string_and_output_twos_complement(strdup("000101"));
     accept_binary_string_and_output_twos_complement(strdup("00010001"));
+
+    accept_binary_string_and_output_hexadecimal(strdup("1000"));
+    accept_binary_string_and_output_hexadecimal(strdup("1110"));
+    accept_binary_string_and_output_hexadecimal(strdup("101101110101"));
 
     return 0;
 }
