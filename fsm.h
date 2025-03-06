@@ -3,7 +3,7 @@
 #include <inttypes.h>
 #include <assert.h>
 
-#define MAX_STATE_NAME_LENGTH 50
+#define MAX_STATE_NAME_LENGTH 256
 
 typedef struct fsm fsm_t;
 typedef struct state state_t;
@@ -11,8 +11,8 @@ typedef struct transition_table transition_table_t;
 typedef struct transition_table_entry transition_table_entry_t;
 typedef int (*StateMatcher)(char *, uint8_t);
 
-#define MAX_FSM_NAME_LENGTH 50
-#define MAX_INPUT_FROM_USER 50
+#define MAX_FSM_NAME_LENGTH 256
+#define MAX_INPUT_FROM_USER 256
 
 typedef enum {
     FSM_NO_ERROR,
@@ -57,8 +57,8 @@ void insert_new_transition_table_entry(
 
 
 
-#define MAX_TRANSITION_INPUT 50
-#define MAX_TRANSITION_OUTPUT 50
+#define MAX_TRANSITION_INPUT 256
+#define MAX_TRANSITION_OUTPUT 256
 
 struct transition_table_entry
 {

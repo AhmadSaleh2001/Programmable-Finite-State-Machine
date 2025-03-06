@@ -81,7 +81,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any string balanced parenthesis and up to  ----------- 
+----------- fsm name: accept any string balanced parenthesis and up to three nested levels ----------- 
 result for input buffer: ((()))
 fsm transition_output: 
 valid input: 1
@@ -90,7 +90,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any string balanced parenthesis and up to  ----------- 
+----------- fsm name: accept any string balanced parenthesis and up to three nested levels ----------- 
 result for input buffer: (((())))
 fsm transition_output: 
 valid input: 0
@@ -99,7 +99,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any string balanced parenthesis and up to  ----------- 
+----------- fsm name: accept any string balanced parenthesis and up to three nested levels ----------- 
 result for input buffer: (()
 fsm transition_output: 
 valid input: 0
@@ -108,7 +108,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any string balanced parenthesis and up to  ----------- 
+----------- fsm name: accept any string balanced parenthesis and up to three nested levels ----------- 
 result for input buffer: (())()()()
 fsm transition_output: 
 valid input: 1
@@ -117,7 +117,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any string balanced parenthesis and up to  ----------- 
+----------- fsm name: accept any string balanced parenthesis and up to three nested levels ----------- 
 result for input buffer: (())()()()(
 fsm transition_output: 
 valid input: 0
@@ -126,7 +126,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any string balanced parenthesis and up to  ----------- 
+----------- fsm name: accept any string balanced parenthesis and up to three nested levels ----------- 
 result for input buffer: (())()()())
 fsm transition_output: 
 valid input: 0
@@ -306,7 +306,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any binary string and output two's complem ----------- 
+----------- fsm name: accept any binary string and output two's complement ----------- 
 result for input buffer: 111111
 fsm transition_output: 000001
 valid input: 1
@@ -315,7 +315,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any binary string and output two's complem ----------- 
+----------- fsm name: accept any binary string and output two's complement ----------- 
 result for input buffer: 000000
 fsm transition_output: 000000
 valid input: 1
@@ -324,7 +324,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any binary string and output two's complem ----------- 
+----------- fsm name: accept any binary string and output two's complement ----------- 
 result for input buffer: 000101
 fsm transition_output: 111011
 valid input: 1
@@ -333,7 +333,7 @@ error code: 0
 -------
 
 -------
------------ fsm name: accept any binary string and output two's complem ----------- 
+----------- fsm name: accept any binary string and output two's complement ----------- 
 result for input buffer: 00010001
 fsm transition_output: 11101111
 valid input: 1
@@ -365,5 +365,32 @@ result for input buffer: 101101110101
 fsm transition_output: B75
 valid input: 1
 error code: 0
+
+-------
+
+-------
+----------- fsm name: accept valid password, Password format is : ####DDMMYYYY, Where # represents alphabets only. DDMMYYYY is date of birth. ----------- 
+result for input buffer: ahmad27032001
+fsm transition_output: 
+valid input: 0
+error code: 1
+
+-------
+
+-------
+----------- fsm name: accept valid password, Password format is : ####DDMMYYYY, Where # represents alphabets only. DDMMYYYY is date of birth. ----------- 
+result for input buffer: ahmd27032001
+fsm transition_output: 
+valid input: 1
+error code: 0
+
+-------
+
+-------
+----------- fsm name: accept valid password, Password format is : ####DDMMYYYY, Where # represents alphabets only. DDMMYYYY is date of birth. ----------- 
+result for input buffer: ahmd270320013
+fsm transition_output: 
+valid input: 0
+error code: 1
 
 -------

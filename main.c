@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "fsm.h"
+#include <ctype.h>
 
 void alternate_binary_fsm(char * input_buffer) {
     fsm_t * fsm = create_new_fsm("strict alternating binary number");
@@ -468,8 +469,101 @@ void accept_binary_string_and_output_hexadecimal(char * input_buffer) {
     printf("\n-------\n");
 }
 
-int main() {
+int match_four_alphabets_only(char *input_buffer, uint8_t input_buffer_cursor) {
+    int length = strlen(input_buffer);
+    int remaining = length - input_buffer_cursor;
 
+    if (remaining < 4) {
+        return 0;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        if (!isalpha(input_buffer[input_buffer_cursor + i])) {
+            return 0;
+        }
+    }
+    
+    return 4;  // All four characters are alphabetic
+}
+
+int match_day_or_month(char * input_buffer, uint8_t input_buffer_cursor) {
+    int length = strlen(input_buffer);
+    int remaining = length - input_buffer_cursor;
+
+    // because we want to take two character
+    if(remaining < 2)return 0;
+
+    char day_month_str[3] = {input_buffer[input_buffer_cursor], input_buffer[input_buffer_cursor + 1], '\0'};
+
+    if (isdigit(day_month_str[0]) && isdigit(day_month_str[1])) {
+        return 2;
+    }
+    
+    return 0;
+}
+
+int match_year(char * input_buffer, uint8_t input_buffer_cursor) {
+    int length = strlen(input_buffer);
+    int remaining = length - input_buffer_cursor;
+
+    // because we want to take four character
+    if(remaining < 4)return 0;
+
+    char day_month_str[4] = {input_buffer[input_buffer_cursor], input_buffer[input_buffer_cursor + 1], input_buffer[input_buffer_cursor + 2], input_buffer[input_buffer_cursor + 3], '\0'};
+    bool isDigit = 1;
+    for(int i=0;i<4;i++) {
+        isDigit&=isdigit(day_month_str[i]);
+    }
+    if (isDigit) {
+        return 4;
+    }
+    
+    return 0;
+}
+
+void accept_valid_password(char * input_buffer) {
+    fsm_t * fsm = create_new_fsm("accept valid password, Password format is : ####DDMMYYYY, Where # represents alphabets only. DDMMYYYY is date of birth.");
+    // username@gmail.com or username@hotmail.com
+    // username should be at least 5 chars
+    // username should be formed from lower capital letters and digits (0 - 9)
+
+    state_t * states[5];
+    /*
+        Rules:
+        state0: empty string
+        state1: we have 4 chars
+        state2: we have 2 digit days
+        state3: we have 2 digit month
+        state4: we have 4 digit year, accept state
+    */
+
+    for(int i=0;i<5;i++) {
+        char state_name[MAX_STATE_NAME_LENGTH - 1];
+        snprintf(state_name, sizeof(state_name), "state %d", i + 1);
+        states[i] = create_new_state(state_name, i == 4);
+    }
+
+    set_state_as_initial_state(fsm, states[0]);
+    insert_new_transition_table_entry(states[0], NULL, "\0", match_four_alphabets_only, states[1]);
+    insert_new_transition_table_entry(states[1], NULL, "\0", match_day_or_month, states[2]);
+    insert_new_transition_table_entry(states[2], NULL, "\0", match_day_or_month, states[3]);
+    insert_new_transition_table_entry(states[3], NULL, "\0", match_year, states[4]);
+
+    bool result = 0;
+    char fsm_output[MAX_TRANSITION_OUTPUT];
+    fsm_error_t error = execute(fsm, input_buffer, strlen(input_buffer), &result, fsm_output);
+
+    printf("\n-------\n");
+    printf("----------- fsm name: %s ----------- \n", fsm->fsm_name);
+    printf("result for input buffer: %s\n", input_buffer);
+    printf("fsm transition_output: %s\n", fsm_output);
+    printf("valid input: %d\n", result);
+    printf("error code: %d\n", error);
+    printf("\n-------\n");
+}
+
+int main() {
+    
     alternate_binary_fsm("010101010101\0");
     alternate_binary_fsm("0100101111\0");
 
@@ -522,6 +616,10 @@ int main() {
     accept_binary_string_and_output_hexadecimal(strdup("1000"));
     accept_binary_string_and_output_hexadecimal(strdup("1110"));
     accept_binary_string_and_output_hexadecimal(strdup("101101110101"));
+
+    accept_valid_password("ahmad27032001");
+    accept_valid_password("ahmd27032001");
+    accept_valid_password("ahmd270320013");
 
     return 0;
 }
