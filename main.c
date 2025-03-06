@@ -486,7 +486,7 @@ int match_four_alphabets_only(char *input_buffer, uint8_t input_buffer_cursor) {
     return 4;  // All four characters are alphabetic
 }
 
-int match_day_or_month(char * input_buffer, uint8_t input_buffer_cursor) {
+int match_two_digit_day_or_month(char * input_buffer, uint8_t input_buffer_cursor) {
     int length = strlen(input_buffer);
     int remaining = length - input_buffer_cursor;
 
@@ -545,8 +545,8 @@ void accept_valid_password(char * input_buffer) {
 
     set_state_as_initial_state(fsm, states[0]);
     insert_new_transition_table_entry(states[0], NULL, "\0", match_four_alphabets_only, states[1]);
-    insert_new_transition_table_entry(states[1], NULL, "\0", match_day_or_month, states[2]);
-    insert_new_transition_table_entry(states[2], NULL, "\0", match_day_or_month, states[3]);
+    insert_new_transition_table_entry(states[1], NULL, "\0", match_two_digit_day_or_month, states[2]);
+    insert_new_transition_table_entry(states[2], NULL, "\0", match_two_digit_day_or_month, states[3]);
     insert_new_transition_table_entry(states[3], NULL, "\0", match_year, states[4]);
 
     bool result = 0;
